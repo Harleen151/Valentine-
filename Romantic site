@@ -2,68 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>For Monu ❤️</title>
-  <style>
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family: system-ui, Arial, sans-serif;
-      color:#fff;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-    }
-    .wrap{
-      max-width:900px;
-      margin:auto;
-      padding:24px;
-    }
-    header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:20px;
-    }
-    .badge{
-      padding:10px 16px;
-      border-radius:30px;
-      background:rgba(255,255,255,0.1);
-      font-weight:600;
-    }
-    .card{
-      background:rgba(255,255,255,0.08);
-      border-radius:18px;
-      padding:24px;
-    }
-    h1{
-      margin-top:0;
-      font-size:32px;
-    }
-    p{
-      color:#e6e6e6;
-      line-height:1.6;
-    }
-    button{
-      padding:12px 18px;
-      border-radius:14px;
-      border:none;
-      background:#ff4d6d;
-      color:#fff;
-      font-weight:600;
-      cursor:pointer;
-      margin-top:10px;
-    }
-    button:hover{
-      background:#ff335a;
-    }
-    input{
-      width:100%;
-      padding:12px;
-      border-radius:12px;
-      border:none;
-      margin-top:10px;
-    }
-    .hidden{
-      display:none;
+  <meta       display:none;
     }
     ul{
       padding-left:18px;
