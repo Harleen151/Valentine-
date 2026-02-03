@@ -1,81 +1,523 @@
 <!doctype html>
-<html lang="en">
+<html lang="pa">
 <head>
   <meta charset="UTF-8" />
-  <meta       display:none;
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Monu ❤️ Love Questions</title>
+  <style>
+    :root{
+      --pink1:#ffe6ef;
+      --pink2:#ffd1df;
+      --pink3:#ffc0d6;
+      --red:#d1002c;
+      --red2:#ff1f57;
+      --text:#ffffff;
     }
-    ul{
-      padding-left:18px;
-      color:#f0f0f0;
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: system-ui, Arial, sans-serif;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      overflow:hidden;
+      background: linear-gradient(135deg, var(--pink1), var(--pink2), var(--pink3));
     }
-    footer{
-      text-align:center;
-      margin-top:20px;
-      color:#ccc;
+
+    /* soft moving light */
+    .glow{
+      position:fixed;
+      inset:-30%;
+      background:
+        radial-gradient(600px 420px at 20% 20%, rgba(255,255,255,0.70), transparent 60%),
+        radial-gradient(700px 520px at 80% 25%, rgba(255,255,255,0.55), transparent 62%),
+        radial-gradient(800px 560px at 40% 80%, rgba(255,255,255,0.45), transparent 65%);
+      filter: blur(10px);
+      animation: drift 10s ease-in-out infinite alternate;
+      pointer-events:none;
+      z-index:0;
+    }
+    @keyframes drift{
+      from{ transform: translate3d(-1.5%, -1.5%, 0) scale(1.02); }
+      to{   transform: translate3d(1.5%, 1.2%, 0) scale(1.06); }
+    }
+
+    /* floating hearts + roses */
+    .float{
+      position:fixed;
+      bottom:-40px;
+      pointer-events:none;
+      z-index:1;
+      opacity:.85;
+      animation: floatUp linear forwards;
+      filter: drop-shadow(0 10px 14px rgba(0,0,0,.12));
+      will-change: transform, opacity;
+    }
+    @keyframes floatUp{
+      to{
+        transform: translateY(-120vh) translateX(var(--drift));
+        opacity:0;
+      }
+    }
+
+    .wrap{
+      width:min(860px, 100%);
+      position:relative;
+      z-index:2;
+    }
+
+    .top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    .badge{
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(0,0,0,0.06);
+      padding:8px 12px;
+      border-radius:999px;
+      font-weight:800;
       font-size:13px;
+      color:#5a0012;
+      backdrop-filter: blur(8px);
+    }
+
+    /* red question card */
+    .card{
+      background: linear-gradient(135deg, var(--red), #b00025);
+      color: var(--text);
+      border-radius:22px;
+      padding:18px;
+      box-shadow: 0 18px 60px rgba(120,0,25,0.35);
+      border: 1px solid rgba(255,255,255,0.15);
+      overflow:hidden;
+      position:relative;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:
+        radial-gradient(420px 320px at 20% 20%, rgba(255,255,255,.18), transparent 55%),
+        radial-gradient(520px 380px at 85% 30%, rgba(255,255,255,.14), transparent 60%);
+      transform: rotate(12deg);
+      pointer-events:none;
+    }
+
+    h1{
+      margin:6px 0 6px;
+      font-size:26px;
+      letter-spacing:-0.02em;
+      position:relative;
+      z-index:1;
+    }
+    .sub{
+      margin:0;
+      color: rgba(255,255,255,0.88);
+      line-height:1.5;
+      font-size:14px;
+      position:relative;
+      z-index:1;
+    }
+
+    .qbox{
+      margin-top:14px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius:18px;
+      padding:16px;
+      position:relative;
+      z-index:1;
+    }
+
+    .qtitle{
+      font-size:18px;
+      font-weight:900;
+      margin:0 0 6px;
+    }
+    .qroman{
+      margin:0 0 12px;
+      font-size:13.5px;
+      color: rgba(255,255,255,0.86);
+      line-height:1.45;
+    }
+
+    .btns{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    button{
+      border:none;
+      border-radius:14px;
+      padding:12px 14px;
+      font-weight:900;
+      cursor:pointer;
+      min-height:44px;
+      transition: transform .08s ease, filter .15s ease;
+      user-select:none;
+    }
+    button:active{transform: scale(0.98);}
+    .opt{
+      background: rgba(255,255,255,0.92);
+      color:#7a001a;
+    }
+    .opt:hover{filter: brightness(1.02);}
+    .next{
+      background: var(--red2);
+      color:#fff;
+    }
+    .ghost{
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.25);
+      color:#fff;
+    }
+
+    textarea{
+      width:100%;
+      min-height:90px;
+      padding:12px;
+      border-radius:14px;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(0,0,0,0.15);
+      color:#fff;
+      outline:none;
+      resize: vertical;
+      font-size:14px;
+      line-height:1.45;
+    }
+    textarea:focus{box-shadow: 0 0 0 3px rgba(255,255,255,.20)}
+    .hint{
+      margin-top:10px;
+      font-size:12.5px;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .progress{
+      height:10px;
+      background: rgba(255,255,255,0.20);
+      border-radius:999px;
+      overflow:hidden;
+      margin-top:14px;
+    }
+    .bar{
+      height:100%;
+      width:0%;
+      background: rgba(255,255,255,0.92);
+      transition: width .25s ease;
+    }
+
+    .result{
+      display:none;
+      margin-top:14px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius:18px;
+      padding:16px;
+    }
+    .result h2{
+      margin:0 0 10px;
+      font-size:18px;
+      font-weight:900;
+    }
+    .result ul{
+      margin:0;
+      padding-left:18px;
+      line-height:1.6;
+      color: rgba(255,255,255,0.92);
+    }
+    .copybox{display:none;margin-top:12px;}
+    .copybox pre{
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: rgba(0,0,0,0.16);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius:14px;
+      padding:12px;
+      margin:10px 0 0;
+      color:#fff;
+      font-size:13.5px;
+      line-height:1.45;
+    }
+
+    .final{
+      display:none;
+      margin-top:14px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius:18px;
+      padding:16px;
+    }
+    .final h2{
+      margin:0 0 8px;
+      font-size:20px;
+      font-weight:1000;
+    }
+    .final p{
+      margin:0;
+      color: rgba(255,255,255,0.90);
+      line-height:1.5;
+      font-size:14px;
+    }
+
+    @media (max-width:420px){
+      button{flex:1 1 auto;}
     }
   </style>
 </head>
-
 <body>
-<div class="wrap">
-  <header>
-    <div class="badge">❤️ Valentine Surprise</div>
-    <div class="badge">From Harleen Kaur 💌</div>
-  </header>
+  <div class="glow"></div>
 
-  <div class="card">
-    <h1>Hey Gurlal Singh (Monu) ❤️</h1>
-    <p>
-      Monu, this is from my heart. You are my strength, my comfort, and my forever.
-      I made this small surprise to remind you how deeply I love you and how special you are to me.
-    </p>
+  <div class="wrap">
+    <div class="top">
+      <div class="badge">From Harleen Kaur 💌</div>
+      <div class="badge" id="stepTxt">ਸਵਾਲ 1 / 6</div>
+    </div>
 
-    <h3>Things I love about you</h3>
-    <ul>
-      <li>Your care and support in every situation</li>
-      <li>The way you make me feel safe and loved</li>
-      <li>Your smile and your patience</li>
-      <li>How you make my life better just by being in it</li>
-    </ul>
+    <div class="card">
+      <h1>Monu ❤️ Romantic Questions</h1>
+      <p class="sub">ਹੱਸ ਕੇ ਜਵਾਬ ਦੇੀਂ 🙂 (Just romantic, funny, smooth)</p>
 
-    <h3>Unlock your Valentine surprise 🔐</h3>
-    <p>Enter our secret word</p>
-    <input id="code" placeholder="Type secret word..." />
-    <button onclick="unlock()">Unlock</button>
+      <div class="qbox" id="qbox">
+        <div class="qtitle" id="question">Loading…</div>
+        <div class="qroman" id="roman"></div>
 
-    <div id="surprise" class="hidden">
-      <h3>Your surprise ❤️</h3>
-      <ul>
-        <li><b>When:</b> 14 February, Evening</li>
-        <li><b>Plan:</b> Dinner made with love + your surprise gift</li>
-        <li><b>Dress:</b> Anything you like, you always look handsome</li>
-        <li><b>My request:</b> Just be yourself and stay with me ❤️</li>
-      </ul>
-      <button onclick="celebrate()">Celebrate 🎉</button>
+        <div class="btns" id="choiceArea"></div>
+
+        <div id="textArea" style="display:none;">
+          <textarea id="textInput" placeholder="ਇਥੇ ਲਿਖੋ… (short answer)"></textarea>
+          <div class="btns">
+            <button class="next" id="saveTextBtn">Next</button>
+          </div>
+        </div>
+
+        <div class="progress"><div class="bar" id="bar"></div></div>
+        <div class="hint" id="hint">Tap an option 🙂</div>
+      </div>
+
+      <div class="result" id="result">
+        <h2>Oye hoye 😄 Thank you Monu ❤️</h2>
+        <ul id="summary"></ul>
+
+        <div class="btns" style="margin-top:12px;">
+          <button class="ghost" id="copyBtn">Copy reply text</button>
+          <button class="ghost" id="restartBtn">Restart</button>
+          <button class="next" id="moreHeartsBtn">More hearts ✨</button>
+          <button class="opt" id="finalBtn">One last question 😉</button>
+        </div>
+
+        <div class="copybox" id="copyBox">
+          <div class="hint">Copy this and send to Harleen:</div>
+          <pre id="replyText"></pre>
+        </div>
+      </div>
+
+      <div class="final" id="final">
+        <h2>Monu, will you be my Valentine? ❤️</h2>
+        <p>ਦੱਸ ਦੇ… ਮੈਂ ਤਾਂ already ਤੇਰੀ ਆਂ 😄</p>
+        <div class="btns" style="margin-top:12px;">
+          <button class="next" id="yes1">Yes of course 💖</button>
+          <button class="opt" id="yes2">Obviously 😍</button>
+          <button class="ghost" id="backBtn">Back</button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <footer>
-    Made with love by Harleen ❤️
-  </footer>
-</div>
-
-<script>
-  const SECRET = "monu";
-
-  function unlock(){
-    const value = document.getElementById("code").value.toLowerCase().trim();
-    if(value === SECRET){
-      document.getElementById("surprise").classList.remove("hidden");
-    } else {
-      alert("Not this one 🙂 Try again");
+  <script>
+    // Smooth floating hearts + roses
+    function spawnFloat(){
+      const el = document.createElement("div");
+      el.className = "float";
+      const items = ["❤️","💖","💕","💘","🌹","🌷","✨","🫶"];
+      el.textContent = items[Math.floor(Math.random()*items.length)];
+      el.style.left = (Math.random()*100) + "vw";
+      el.style.setProperty("--drift", (Math.random()*80 - 40) + "px");
+      const dur = 7 + Math.random()*5;
+      el.style.animationDuration = dur + "s";
+      el.style.fontSize = (16 + Math.random()*18) + "px";
+      el.style.opacity = (0.55 + Math.random()*0.35).toFixed(2);
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(), dur*1000);
     }
-  }
+    const floatTimer = setInterval(spawnFloat, 650);
+    function burst(n=14){ for(let i=0;i<n;i++) setTimeout(spawnFloat, i*120); }
 
-  function celebrate(){
-    alert("Happy Valentine’s Day Monu ❤️");
-  }
-</script>
+    // Questions
+    const questions = [
+      { key:"love", title:"1) ਤੂੰ ਮੈਨੂੰ ਪਿਆਰ ਕਰਦਾ ਏਂ? ❤️", roman:"(Do you love me?)",
+        type:"choice", options:["ਹਾਂ (Haan) 💖","ਬਹੁਤ (Bohat) 😍","ਹਮੇਸ਼ਾ (Hamesha) 🫶","Always yours ❤️"] },
+      { key:"like", title:"2) ਤੈਨੂੰ ਮੈਂ ਚੰਗੀ ਲੱਗਦੀ ਆਂ? 🙂", roman:"(U like me?)",
+        type:"choice", options:["ਹਾਂ (Haan) ❤️","Always 😄","Bilkul 💘","Tainu hi pasand 😌"] },
+      { key:"decisions", title:"3) ਤੈਨੂੰ ਮੇਰੇ decision ਸਹੀ ਲੱਗਦੇ ਆ? 🤝", roman:"(Tainu mere decision sahi lagde aa?)",
+        type:"choice", options:["ਹਾਂ ✅","Main support ਕਰਦਾ ❤️","Trust 🤍","Always with you 🫶"] },
+      { key:"rolePick", title:"4) ਮੈਂ ਤੇਰੀ ਜ਼ਿੰਦਗੀ ਵਿੱਚ ਕੀ ਹਾਂ? 😄", roman:"(Pick one cute answer)",
+        type:"choice", options:["Queen 👑","Best friend 🫶","Home 🏡","Everything 💖"] },
+      { key:"role", title:"5) ਮੇਰਾ ਤੇਰੀ ਜ਼ਿੰਦਗੀ ‘ਚ ਕੀ role ਆ? ✍️", roman:"(One line answer)",
+        type:"text" }
+    ];
+
+    const answers = {};
+    let idx = 0;
+
+    const stepTxt = document.getElementById("stepTxt");
+    const qEl = document.getElementById("question");
+    const rEl = document.getElementById("roman");
+    const choiceArea = document.getElementById("choiceArea");
+    const textArea = document.getElementById("textArea");
+    const textInput = document.getElementById("textInput");
+    const saveTextBtn = document.getElementById("saveTextBtn");
+    const bar = document.getElementById("bar");
+    const hint = document.getElementById("hint");
+
+    const qbox = document.getElementById("qbox");
+    const result = document.getElementById("result");
+    const summary = document.getElementById("summary");
+    const copyBtn = document.getElementById("copyBtn");
+    const restartBtn = document.getElementById("restartBtn");
+    const moreHeartsBtn = document.getElementById("moreHeartsBtn");
+    const copyBox = document.getElementById("copyBox");
+    const replyTextEl = document.getElementById("replyText");
+
+    const finalBtn = document.getElementById("finalBtn");
+    const final = document.getElementById("final");
+    const yes1 = document.getElementById("yes1");
+    const yes2 = document.getElementById("yes2");
+    const backBtn = document.getElementById("backBtn");
+
+    function render(){
+      const total = questions.length + 1; // + final question
+      stepTxt.textContent = `ਸਵਾਲ ${idx+1} / ${total}`;
+      bar.style.width = `${Math.round((idx/(total))*100)}%`;
+
+      const q = questions[idx];
+      qEl.textContent = q.title;
+      rEl.textContent = q.roman || "";
+      copyBox.style.display = "none";
+
+      if(q.type === "text"){
+        choiceArea.innerHTML = "";
+        choiceArea.style.display = "none";
+        textArea.style.display = "block";
+        hint.textContent = "Short and sweet 🙂";
+        textInput.value = answers[q.key] || "";
+        setTimeout(()=>textInput.focus(), 60);
+      } else {
+        textArea.style.display = "none";
+        choiceArea.style.display = "flex";
+        hint.textContent = "Tap an option 🙂";
+        choiceArea.innerHTML = "";
+        q.options.forEach(opt=>{
+          const b = document.createElement("button");
+          b.className = "opt";
+          b.textContent = opt;
+          b.addEventListener("click", ()=>{
+            answers[q.key] = opt;
+            burst(10);
+            next();
+          });
+          choiceArea.appendChild(b);
+        });
+      }
+    }
+
+    function next(){
+      idx++;
+      if(idx >= questions.length){
+        finish();
+      }else{
+        render();
+      }
+    }
+
+    function finish(){
+      bar.style.width = "100%";
+      qbox.style.display = "none";
+      result.style.display = "block";
+      burst(22);
+
+      const lines = [
+        `1) Love: ${answers.love || "-"}`,
+        `2) Like: ${answers.like || "-"}`,
+        `3) Decisions: ${answers.decisions || "-"}`,
+        `4) You are: ${answers.rolePick || "-"}`,
+        `5) Role line: ${answers.role || "-"}`
+      ];
+      summary.innerHTML = lines.map(x=>`<li>${x}</li>`).join("");
+
+      const reply =
+`Harleen ❤️
+1) Love → ${answers.love || "-"}
+2) Like → ${answers.like || "-"}
+3) Decisions → ${answers.decisions || "-"}
+4) Tusi mere layi → ${answers.rolePick || "-"}
+5) Role (line) → ${answers.role || "-"}
+
+Monu ❤️`;
+
+      replyTextEl.textContent = reply;
+
+      // update step counter to 6/6 in result view
+      stepTxt.textContent = `ਸਵਾਲ ${questions.length + 1} / ${questions.length + 1}`;
+    }
+
+    saveTextBtn.addEventListener("click", ()=>{
+      const v = (textInput.value || "").trim();
+      answers[questions[idx].key] = v ? v : "(no answer)";
+      burst(10);
+      next();
+    });
+
+    copyBtn.addEventListener("click", async ()=>{
+      copyBox.style.display = "block";
+      try{
+        await navigator.clipboard.writeText(replyTextEl.textContent);
+        copyBtn.textContent = "Copied ✅";
+        setTimeout(()=>copyBtn.textContent="Copy reply text", 1200);
+      }catch(e){
+        // clipboard may be blocked; manual copy still works
+      }
+    });
+
+    restartBtn.addEventListener("click", ()=>{
+      idx = 0;
+      for(const k in answers) delete answers[k];
+      final.style.display = "none";
+      result.style.display = "none";
+      qbox.style.display = "block";
+      render();
+    });
+
+    moreHeartsBtn.addEventListener("click", ()=>burst(30));
+
+    finalBtn.addEventListener("click", ()=>{
+      final.style.display = "block";
+      burst(18);
+      final.scrollIntoView({behavior:"smooth", block:"nearest"});
+    });
+
+    function acceptValentine(choice){
+      burst(40);
+      const msg = `Harleen ❤️ I choose: ${choice} 😍 Happy Valentine’s!`;
+      copyBox.style.display = "block";
+      replyTextEl.textContent = replyTextEl.textContent + "\n\n" + msg;
+    }
+
+    yes1.addEventListener("click", ()=>acceptValentine("Yes of course 💖"));
+    yes2.addEventListener("click", ()=>acceptValentine("Obviously 😍"));
+    backBtn.addEventListener("click", ()=>{
+      final.style.display = "none";
+      result.scrollIntoView({behavior:"smooth", block:"nearest"});
+    });
+
+    render();
+  </script>
 </body>
 </html>
